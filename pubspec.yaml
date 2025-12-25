@@ -1,0 +1,110 @@
+name: car_house
+description: "A new Flutter project."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_svg: ^2.2.3
+  curved_navigation_bar: ^1.0.6
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  flutter_native_splash: ^2.4.7
+  image_picker: ^1.2.1
+  supabase_flutter: ^2.10.3
+  cached_network_image: ^3.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+# إعداد أيقونة التطبيق
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/Logo.png"
+
+# إعداد Splash Screen
+flutter_native_splash:
+  color: "#FFFFFF" # White background
+  color_dark: "#FFFFFF" # White for dark mode too
+  image: assets/logo/Logo.png
+  image_dark: assets/logo/Logo.png
+  fullscreen: true
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#FFFFFF"
+    image: assets/logo/Logo.png
+    image_dark: assets/logo/Logo.png
+    icon_background_color: "#FFFFFF"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/brake.svg
+    - assets/icons/engine.svg
+    - assets/icons/fluid.svg
+    - assets/icons/maintenance.svg
+    - assets/icons/suspension.svg
+    - assets/icons/heart.svg
+    - assets/images/engine/alternator.webp
+    - assets/images/engine/compressor.jpg
+    - assets/images/engine/cylinder head.jpg
+    - assets/images/engine/Ignition coil.webp
+    - assets/images/engine/Injectors.jpg
+    - assets/images/engine/Radiator.webp
+    - assets/images/engine/Starter Motor.jpg
+    - assets/images/engine/Thermostat.jpg
+    - assets/images/engine/turbo.jpg
+    - assets/images/engine/Water Pump.jpg
+    - assets/images/brake/Brake Booster.jpg
+    - assets/images/brake/Brake Disc.jpg
+    - assets/images/brake/brake pads.jpg
+    - assets/images/brake/Brake Shoe.jpg
+    - assets/images/brake/Caliper Rebuild Kit.jpg
+    - assets/images/brake/Front Brake Caliper.jpg
+    - assets/images/brake/Master Cylinder.webp
+    - assets/images/brake/Rear Brake Drum.jpg
+    - assets/images/brake/Rim.jpg
+    - assets/images/brake/Tire.png
+    - assets/images/maintenance_fluids/Brake Cleaner.webp
+    - assets/images/maintenance_fluids/Brake Fluid DOT 3 (1L).jpg
+    - assets/images/maintenance_fluids/Coolant (4L).jpg
+    - assets/images/maintenance_fluids/CVT Oil (4L).jpg
+    - assets/images/maintenance_fluids/Differential Oil (1L).webp
+    - assets/images/maintenance_fluids/Engine Oil 5W-30 ( 4L).jpg
+    - assets/images/maintenance_fluids/Engine Oil 15W-40 (6L).jpg
+    - assets/images/maintenance_fluids/Fome Cleaner.jpg
+    - assets/images/maintenance_fluids/T-IV ATF Oil (5L).jpg
+    - assets/images/maintenance_fluids/Windshield Washer Fluid.webp
+    - assets/images/maintenance_parts/Ac Filter.webp
+    - assets/images/maintenance_parts/Air Filter.jpg
+    - assets/images/maintenance_parts/Battery.jpg
+    - assets/images/maintenance_parts/crankshaft rear seal.jpeg
+    - assets/images/maintenance_parts/Fuel Filter.jfif
+    - assets/images/maintenance_parts/Headlight.jfif
+    - assets/images/maintenance_parts/Oil Filter.webp
+    - assets/images/maintenance_parts/Rubber Blade.jpg
+    - assets/images/maintenance_parts/Spark Plug.webp
+    - assets/images/maintenance_parts/V Belt.jpg
+    - assets/images/suspension/Ball Joint FR Lower.jpg
+    - assets/images/suspension/Engine Mount.jpg
+    - assets/images/suspension/Front Control Arm.png
+    - assets/images/suspension/Front Drive Shaft.jpg
+    - assets/images/suspension/Front Stabilizer Link.jpg
+    - assets/images/suspension/Front Suspension Crossmember.jpg
+    - assets/images/suspension/rear Absorbers Shock.webp
+    - assets/images/suspension/shock absorber.webp
+    - assets/images/suspension/Steering Knuckle.jpg
+    - assets/images/suspension/Steering Linkage.jpg
+    - assets/logo/Logo.png

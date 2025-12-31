@@ -37,6 +37,36 @@ class _ServiceBookingViewState extends State<ServiceBookingView> {
     '🔍': Icons.search,
   };
 
+  // ==================== Price Calculations ====================
+
+  /// Get the base price of the selected service
+  double get _serviceBasePrice {
+    if (_serviceTypes.isEmpty) return 0;
+    return _serviceTypes[_selectedServiceIndex].basePrice ?? 0;
+  }
+
+  /// Calculate subtotal of all spare parts included in the service
+  double get _partsSubtotal {
+    double total = 0;
+    for (final item in _currentServiceProducts) {
+      if (item.product != null) {
+        total += item.product!.price * item.quantity;
+      }
+    }
+    return total;
+  }
+
+  /// Calculate the overall subtotal (service + parts)
+  double get _subtotal => _serviceBasePrice + _partsSubtotal;
+
+  /// Calculate 14% tax
+  double get _tax => _subtotal * 0.14;
+
+  /// Calculate the total price including tax
+  double get _totalPrice => _subtotal + _tax;
+
+  // ==============================================================
+
   @override
   void initState() {
     super.initState();
@@ -283,6 +313,10 @@ class _ServiceBookingViewState extends State<ServiceBookingView> {
                     // Notes
                     _buildSectionTitle("Additional Notes"),
                     _buildNotesSection(),
+
+                    // Price Summary Section
+                    _buildSectionTitle("Price Summary"),
+                    _buildPriceSummarySection(),
 
                     // Submit Button
                     Padding(
@@ -760,6 +794,91 @@ class _ServiceBookingViewState extends State<ServiceBookingView> {
           contentPadding: const EdgeInsets.all(16),
         ),
       ),
+    );
+  }
+
+  Widget _buildPriceSummarySection() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // Service Fee
+          if (_serviceBasePrice > 0)
+            _buildPriceSummaryRow(
+              "Service Fee",
+              "${_serviceBasePrice.toStringAsFixed(0)} EGP",
+            ),
+
+          // Spare Parts (if any)
+          if (_partsSubtotal > 0) ...[
+            const SizedBox(height: 8),
+            _buildPriceSummaryRow(
+              "Spare Parts (${_currentServiceProducts.length} items)",
+              "${_partsSubtotal.toStringAsFixed(0)} EGP",
+            ),
+          ],
+
+          const SizedBox(height: 8),
+          _buildPriceSummaryRow(
+            "Subtotal",
+            "${_subtotal.toStringAsFixed(0)} EGP",
+          ),
+
+          const SizedBox(height: 8),
+          _buildPriceSummaryRow("Tax (14%)", "${_tax.toStringAsFixed(0)} EGP"),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Divider(),
+          ),
+
+          _buildPriceSummaryRow(
+            "Total",
+            "${_totalPrice.toStringAsFixed(0)} EGP",
+            isTotal: true,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPriceSummaryRow(
+    String label,
+    String value, {
+    bool isTotal = false,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: isTotal ? 16 : 14,
+            fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+            color: isTotal ? AppColors.textBlack : Colors.grey[600],
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: isTotal ? 18 : 14,
+            fontWeight: FontWeight.bold,
+            color: isTotal ? AppColors.primaryBlue : AppColors.textBlack,
+          ),
+        ),
+      ],
     );
   }
 }

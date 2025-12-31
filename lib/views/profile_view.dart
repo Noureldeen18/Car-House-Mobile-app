@@ -7,6 +7,7 @@ import '../widgets/custom_image.dart';
 import 'auth/ui/login_view.dart';
 import 'my_acc.dart';
 import 'my_orders_view.dart';
+import 'my_bookings_view.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoading = true;
 
   int _orderCount = 0;
+  int _bookingCount = 0;
 
   @override
   void initState() {
@@ -33,10 +35,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final profile = await _service.getProfile();
       final orders = await _service.getOrders();
+      final bookings = await _service.getUserBookings();
       if (mounted) {
         setState(() {
           _profile = profile?.toMap();
           _orderCount = orders.length;
+          _bookingCount = bookings.length;
           _isLoading = false;
         });
       }
@@ -191,31 +195,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          // Orders count
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.shopping_bag_outlined,
-                  color: Colors.white,
-                  size: 20,
+          // Orders and Bookings count
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  "$_orderCount Orders",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ],
-            ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.shopping_bag_outlined,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      "$_orderCount Orders",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.car_repair_outlined,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      "$_bookingCount Bookings",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -273,6 +316,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const MyOrdersView()),
+              );
+            },
+          ),
+          _buildMenuItem(
+            icon: Icons.car_repair_outlined,
+            title: "My Service Bookings",
+            subtitle: "View your service booking history",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MyBookingsView()),
               );
             },
           ),

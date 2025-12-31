@@ -50,8 +50,14 @@ class _HomeViewState extends State<HomeView> {
               )
               .toList();
 
-    final topRated = filteredProducts.where((p) => p.rating >= 4.0).toList();
-    final popular = filteredProducts.take(10).toList();
+    // Popular products: rating from 4.4 to 4.6
+    final popular = filteredProducts
+        .where((p) => p.rating >= 4.4 && p.rating <= 4.6)
+        .toList();
+    // Top rated: rating from 4.7 to 5.0
+    final topRated = filteredProducts
+        .where((p) => p.rating >= 4.7 && p.rating <= 5.0)
+        .toList();
     final featured = productList
         .where((p) => p.meta['is_featured'] == true)
         .toList();
@@ -401,25 +407,6 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 3,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryOrange,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Text(
-                      "NEW",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
                   const Text(
                     "Book a Service",
                     style: TextStyle(
